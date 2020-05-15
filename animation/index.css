@@ -1,0 +1,27 @@
+button {
+    margin-bottom: 10px;
+    margin-top: 10px;
+    width: 100px;
+    height: 40px;
+    background-color: yellow;
+  } 
+
+.wrapper{
+position: relative;
+width: 400px;
+height: 400px;
+border: 3px solid red;
+background: yellowgreen;
+}
+
+.box {
+position: absolute;
+width: 40px;
+height: 40px;
+background: rosybrown;
+top: 0;
+left: 0;
+box-sizing: border-box;
+}
+
+
