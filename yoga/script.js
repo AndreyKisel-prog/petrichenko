@@ -29,7 +29,22 @@ window.addEventListener('DOMContentLoaded', function () {
     })
 
 
+    // add modal window
+    let btnModalShow = document.querySelector('.more'),
+        modalWindow = document.querySelector('.overlay'),
+        popupClose = document.querySelector('.popup-close');
 
+    btnModalShow.addEventListener('click', function () {
+        modalWindow.style.display = 'block';
+        document.body.style.overflow = 'hidden';
+        this.classList.add('more-splash')
+    })
+
+    popupClose.addEventListener('click', function () {
+        modalWindow.style.display = 'none';
+        document.body.style.overflow = '';
+        btnModalShow.classList.remove('more-splash');
+    })
 
 
 
