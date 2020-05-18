@@ -1,0 +1,72 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+div {
+    width: 300px;
+    margin: 0 auto;
+}
+
+div * {
+    display: block;
+    /* margin: 0 auto; */
+    margin-top: 10px;
+    text-align: left;
+}
+
+.checkbox {
+    display: inline;
+}
+
+div input {
+    height: 20px;
+    border: none;
+}
+
+div button {
+    background: blue;
+    padding: 10px;
+    border-radius: 5px;
+    color: white;
+    border: none;
+}
+
+.changeBtn {
+    margin: 0 auto;
+    margin-top: 30px;
+}
+
+.LoginBtn {
+    width: 250px;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.circle {
+    transition-property: width, height, margin-left, margin-top;
+    transition-duration: 4s;
+    position: fixed;
+    transform: translateX(-50%) translateY(-50%);
+    background-color: green;
+    border-radius: 50%;
+    top: 150px;
+    left: 150px;
+    width: 0px;
+    height: 0px;
+}
+
+.max-circle {
+    width: 200px;
+    height: 200px;
+}
+
+textarea {
+    border: 1px solid skyblue;
+    display: block;
+}
+.textReset {
+    display: block;
+    margin: 5px 0;
+   
+}

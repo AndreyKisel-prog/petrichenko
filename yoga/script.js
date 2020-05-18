@@ -46,7 +46,57 @@ window.addEventListener('DOMContentLoaded', function () {
         btnModalShow.classList.remove('more-splash');
     })
 
+    // Form1
+    let message = {
+        loading: 'Загрузка...',
+        success: "Спасибо! Мы свяжемся с Вами в ближайшее время!",
+        failure: "Произошла ошибка"
+    }
+
+    let formModal = document.querySelector('.main-form');
+    let formEmail = document.querySelector('#form');
+
+    sendForm(formModal);
+    sendForm(formEmail);
+
+
+
+    function sendForm(form) {
+        let inputs = document.querySelectorAll('input');
+
+        form.addEventListener('submit', function (event) {
+            event.preventDefault();
+            let statusMessage = document.createElement('div');
+            form.appendChild(statusMessage);
+
+            let xhr = new XMLHttpRequest();
+            xhr.open('POST', "server.php");
+            xhr.setRequestHeader("Content-Type", "application/json");
+
+            let obj = {};
+            let formData = new FormData(form);
+            formData.forEach((value, key) => { obj[key] = value })
+            let json = JSON.stringify(obj);
+
+            xhr.send(json);
+
+            xhr.addEventListener('readystatechange', () => {
+                if (xhr.readyState < 4) {
+                    statusMessage.innerHTML = message.loading;
+                } else if (xhr.readyState == - 4 && xhr.status == 200) {
+                    statusMessage.innerHTML = message.failure;
+                } else {
+                    statusMessage.innerHTML = message.success;
+                }
+            })
+            inputs.forEach(input => input.value = '');
+        });
+
+    }
 
 
 })
 
+
+
+//  Form2
