@@ -55,46 +55,66 @@ window.addEventListener('DOMContentLoaded', function () {
 
     let formModal = document.querySelector('.main-form');
     let formEmail = document.querySelector('#form');
+    let inputs = document.querySelectorAll('input');
+    let statusMessage = document.createElement('div');
+    statusMessage.classList.add('status');
+    let json;
 
     sendForm(formModal);
     sendForm(formEmail);
 
-
-
     function sendForm(form) {
-        let inputs = document.querySelectorAll('input');
-
         form.addEventListener('submit', function (event) {
             event.preventDefault();
-            let statusMessage = document.createElement('div');
             form.appendChild(statusMessage);
-
-            let xhr = new XMLHttpRequest();
-            xhr.open('POST', "server.php");
-            xhr.setRequestHeader("Content-Type", "application/json");
-
-            let obj = {};
             let formData = new FormData(form);
-            formData.forEach((value, key) => { obj[key] = value })
-            let json = JSON.stringify(obj);
 
-            xhr.send(json);
+            function postData(json) {
 
-            xhr.addEventListener('readystatechange', () => {
-                if (xhr.readyState < 4) {
-                    statusMessage.innerHTML = message.loading;
-                } else if (xhr.readyState == - 4 && xhr.status == 200) {
-                    statusMessage.innerHTML = message.failure;
-                } else {
+                return new Promise((resolve, reject) => {
+                    let xhr = new XMLHttpRequest();
+
+                    xhr.open('POST', "server.php");
+
+                    xhr.setRequestHeader("Content-Type", "application/json");
+
+                    xhr.addEventListener('readystatechange', () => {
+                        if (xhr.readyState < 4) {
+                            resolve();
+                            // statusMessage.innerHTML = message.loading;
+                        } else if (xhr.readyState === 4) {
+                            if (xhr.status == 200 && xhr.status < 300) {
+                                resolve();
+                            } else {
+                                reject();
+                            }
+                        }
+                    })
+
+                    let obj = {};
+                    formData.forEach((value, key) => { obj[key] = value })
+                    json = JSON.stringify(obj);
+                    xhr.send(json);
+
+                })
+            }// end postData
+
+            function clearInput() {
+                inputs.forEach(input => input.value = '');
+            }
+
+            postData(json)
+                .then(() => statusMessage.innerHTML = message.loading)
+                .then(() => {
+                    // thanksModal.style.dysplay = 'block';
+                    // mainModal.style.display = 'none';
                     statusMessage.innerHTML = message.success;
-                }
-            })
-            inputs.forEach(input => input.value = '');
+                })
+                .catch(() => statusMessage.innerHTML = message.failure)
+                .then(clearInput)
+
         });
-
     }
-
-
 })
 
 
